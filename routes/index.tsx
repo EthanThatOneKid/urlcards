@@ -1,31 +1,41 @@
 import { Head } from "$fresh/runtime.ts";
-import { useSignal } from "@preact/signals";
-import Counter from "../islands/Counter.tsx";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import URLCardsPage, {
+  type URLCardsPageProps,
+} from "#/components/urlcards_page.tsx";
+import { urlcardsService } from "#/services/mod.ts";
+import { ADMIN_PATH } from "#/env.ts";
 
-export default function Home() {
-  const count = useSignal(3);
+export const handler: Handlers<URLCardsPageProps | null> = {
+  async GET(_, ctx) {
+    const settings = await urlcardsService.getSettings()
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
+    if (!settings) {
+      return Response.redirect(ADMIN_PATH);
+    }
+
+    const pageProps: URLCardsPageProps = {
+      cards: await urlcardsService.listCards(),
+      settings: await urlcardsService.getSettings(),
+    };
+
+    // TODO: remove.
+    console.log({ pageProps });
+
+    return ctx.render(pageProps);
+  },
+};
+
+export default function Home(props: PageProps<URLCardsPageProps>) {
   return (
     <>
       <Head>
         <title>urlcards</title>
       </Head>
-      <div class="px-4 py-8 mx-auto bg-[#86efac]">
-        <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-          <img
-            class="my-6"
-            src="/logo.svg"
-            width="128"
-            height="128"
-            alt="the fresh logo: a sliced lemon dripping with juice"
-          />
-          <h1 class="text-4xl font-bold">Welcome to fresh</h1>
-          <p class="my-4">
-            Try updating this message in the
-            <code class="mx-2">./routes/index.tsx</code> file, and refresh.
-          </p>
-          <Counter count={count} />
-        </div>
-      </div>
+      <URLCardsPage {...props.data} />
     </>
   );
 }

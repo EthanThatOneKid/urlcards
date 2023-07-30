@@ -13,11 +13,6 @@ export interface URLCardsService {
   listCards(): Promise<URLCard[]>;
 
   /**
-   * getPicture gets the picture for a URLCard.
-   */
-  getPicture(r: GetURLCardPictureRequest): Promise<Uint8Array>;
-
-  /**
    * updateCard updates a URLCard.
    */
   updateCard(r: UpdateURLCardRequest): Promise<URLCard>;
@@ -28,9 +23,14 @@ export interface URLCardsService {
   deleteCard(r: DeleteURLCardRequest): Promise<void>;
 
   /**
+   * getSettings gets the settings for the URLCardsService.
+   */
+  getSettings(): Promise<URLCardsSettings>;
+
+  /**
    * updateSettings updates the settings for the URLCardsService.
    */
-  updateSettings(r: UpdateURLCardsSettingsRequest): Promise<void>;
+  updateSettings(r: UpdateURLCardsSettingsRequest): Promise<URLCardsSettings>;
 }
 
 /**
@@ -48,9 +48,19 @@ export interface UpdateURLCardRequest extends Partial<CreateURLCardRequest> {
  */
 export interface CreateURLCardRequest extends URLCard {
   /**
+   * title is the title of the URLCard.
+   */
+  title: string;
+
+  /**
+   * url is the URL of the URLCard.
+   */
+  url: string;
+
+  /**
    * picture is the picture of the URLCard.
    */
-  picture: Uint8Array;
+  picture: File;
 }
 
 /**
@@ -82,6 +92,11 @@ export interface URLCard {
    * url is the URL of the URLCard.
    */
   url: string;
+
+  /**
+   * pictureSrc is the URL where the picture of the URLCard can be accessed.
+   */
+  pictureSrc: string;
 }
 
 /**
@@ -91,9 +106,9 @@ export interface URLCard {
 export interface UpdateURLCardsSettingsRequest
   extends Partial<URLCardsSettings> {
   /**
-   * picture is the picture on the index page.
+   * logo is the logo shown on the index page.
    */
-  picture?: Uint8Array;
+  logo?: File;
 }
 
 /**
@@ -114,4 +129,9 @@ export interface URLCardsSettings {
    * allowList is the list of allowed URLs. If empty, all URLs are allowed.
    */
   allowList: string[];
+
+  /**
+   * logoSrc is the URL where the logo can be accessed.
+   */
+  logoSrc: string;
 }
