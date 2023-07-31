@@ -29,11 +29,11 @@ export const handler: Handlers<URLCardsPageProps | null> = {
   },
 };
 
-export default function Home(props: PageProps<URLCardsPageProps>) {
+export default function HomePage(props: PageProps<URLCardsPageProps>) {
   return (
     <>
       <Head>
-        <title>urlcards</title>
+        <title>{props.data.settings.title || "urlcards"}</title>
       </Head>
       <URLCardsPage {...props.data} />
     </>
