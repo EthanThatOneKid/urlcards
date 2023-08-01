@@ -9,10 +9,13 @@ import URLCardsAdminPage, {
 export const handler: Handlers<URLCardsAdminPageProps | null> = {
   async GET(_, ctx) {
     // Redirect to public page if admin token is not provided.
-    const adminToken = ctx.params.admin_token;
     if (ctx.params.admin_token !== ADMIN_TOKEN) {
-      console.log({ adminToken: ctx.params });
-      return Response.redirect("/");
+      return new Response("", {
+        status: 302,
+        headers: {
+          Location: "/",
+        },
+      });
     }
 
     const pageProps: URLCardsAdminPageProps = {
