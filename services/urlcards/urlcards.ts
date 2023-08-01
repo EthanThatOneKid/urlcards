@@ -46,7 +46,7 @@ export interface UpdateURLCardRequest extends Partial<CreateURLCardRequest> {
 /**
  * CreateURLCardRequest is the parsed request for creating a URLCard.
  */
-export interface CreateURLCardRequest extends URLCard {
+export interface CreateURLCardRequest {
   /**
    * title is the title of the URLCard.
    */
@@ -58,9 +58,9 @@ export interface CreateURLCardRequest extends URLCard {
   url: string;
 
   /**
-   * picture is the picture of the URLCard.
+   * pictureFile is the picture of the URLCard to be uploaded.
    */
-  picture: File;
+  pictureFile: File;
 }
 
 /**
@@ -77,21 +77,11 @@ export type GetURLCardPictureRequest = Pick<URLCard, "id">;
 /**
  * URLCard is a representation of a URLCard in the URLCardsService.
  */
-export interface URLCard {
+export interface URLCard extends Omit<CreateURLCardRequest, "pictureFile"> {
   /**
    * id is the id of the URLCard.
    */
   id: string;
-
-  /**
-   * title is the title of the URLCard.
-   */
-  title: string;
-
-  /**
-   * url is the URL of the URLCard.
-   */
-  url: string;
 
   /**
    * pictureSrc is the URL where the picture of the URLCard can be accessed.

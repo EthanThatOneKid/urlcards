@@ -51,7 +51,7 @@ function CreateURLCardList(props: CreateURLCardListProps) {
               <legend>
                 <a href={card.url}>{card.title}</a>
               </legend>
-              <input type="hidden" name="id" value={card.id} />
+              <img src={card.pictureSrc} alt={card.title} />
               <button type="submit">Delete</button>
             </fieldset>
           </form>

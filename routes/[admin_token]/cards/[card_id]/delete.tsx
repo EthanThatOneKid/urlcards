@@ -1,7 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { ADMIN_TOKEN } from "#/env.ts";
 import { urlcardsService } from "#/services/services.ts";
-// import { urlcardsService } from "#/services/mod.ts";
 
 export const handler: Handlers = {
   async POST(request, ctx) {
@@ -15,28 +14,12 @@ export const handler: Handlers = {
       });
     }
 
-    // Parse the form data.
-    const formData = await request.formData();
-    const title = formData.get("title");
-    if (typeof title !== "string") {
-      throw new Error("title is not a string");
+    if (!ctx.params.card_id) {
+      throw new Error("card_id is not present");
     }
-
-    const url = formData.get("url");
-    if (typeof url !== "string") {
-      throw new Error("url is not a string");
-    }
-
-    const pictureFile = formData.get("picture_file");
-    if (!(pictureFile instanceof File)) {
-      throw new Error("picture_file is not a File");
-    }
-
     try {
-      await urlcardsService.createCard({
-        title,
-        url,
-        pictureFile,
+      await urlcardsService.deleteCard({
+        id: ctx.params.card_id,
       });
     } catch (error) {
       console.error(error);

@@ -28,7 +28,7 @@ export class DenoKvURLCardsService implements URLCardsService {
   public async createCard(r: CreateURLCardRequest): Promise<URLCard> {
     // Upload the picture.
     const { url: pictureSrc } = await this.uploads.createUpload({
-      file: r.picture,
+      file: r.pictureFile,
     });
 
     // Make a URLCard.
@@ -78,9 +78,9 @@ export class DenoKvURLCardsService implements URLCardsService {
 
     // Update the picture if present.
     const card = cardResult.value;
-    if (r.picture) {
+    if (r.pictureFile) {
       const { url } = await this.uploads.createUpload({
-        file: r.picture,
+        file: r.pictureFile,
       });
       card.pictureSrc = url;
     }
