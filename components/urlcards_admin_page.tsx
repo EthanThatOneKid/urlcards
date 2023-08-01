@@ -73,7 +73,12 @@ interface CreateURLCardFormProps {
  */
 function CreateURLCardForm(props: CreateURLCardFormProps) {
   return (
-    <form class="urlcards-admin-create-form" action={`/${ADMIN_TOKEN}/cards`}>
+    <form
+      method="POST"
+      enctype="multipart/form-data"
+      class="urlcards-admin-create-form"
+      action={`/${ADMIN_TOKEN}/cards`}
+    >
       <fieldset>
         <legend>Create URLCard</legend>
 
@@ -183,6 +188,7 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         action={`/${ADMIN_TOKEN}/settings/logo`}
         method="POST"
         class="urlcards-admin-logo-form"
+        enctype="multipart/form-data"
       >
         <fieldset>
           <legend>Edit logo</legend>

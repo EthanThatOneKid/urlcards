@@ -35,7 +35,7 @@ export default function AdminPage(props: PageProps<URLCardsAdminPageProps>) {
   return (
     <>
       <Head>
-        <title>{props.data.settings?.title || "urlcards"}</title>
+        <title>Admin | {props.data.settings?.title || "URLCards"}</title>
       </Head>
       <URLCardsAdminPage {...props.data} />
     </>

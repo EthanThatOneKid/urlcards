@@ -34,7 +34,7 @@ export default function HomePage(props: PageProps<URLCardsPageProps>) {
   return (
     <>
       <Head>
-        <title>{props.data.settings.title || "urlcards"}</title>
+        <title>{props.data.settings.title || "URLCards"}</title>
       </Head>
       <URLCardsPage {...props.data} />
     </>
