@@ -128,10 +128,30 @@ export interface URLCardsSettings {
   /**
    * allowList is the list of allowed URLs. If empty, all URLs are allowed.
    */
-  allowList: string[];
+  allowList: AllowList;
 
   /**
    * logoSrc is the URL where the logo can be accessed.
    */
   logoSrc: string;
+}
+
+/**
+ * AllowList is a list of allowed URLs.
+ */
+export type AllowList = AllowedURL[];
+
+/**
+ * AllowedURL is a URL in the allow list.
+ */
+interface AllowedURL {
+  /**
+   * name is the unique name of the URL.
+   */
+  name: string;
+
+  /**
+   * url is the URL value.
+   */
+  url: string;
 }

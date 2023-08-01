@@ -1,20 +1,23 @@
 import { Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { ADMIN_TOKEN } from "#/env.ts";
+import { urlcardsService } from "#/services/mod.ts";
 import URLCardsPage, {
   type URLCardsPageProps,
 } from "#/components/urlcards_page.tsx";
-import { urlcardsService } from "#/services/mod.ts";
-import { ADMIN_PATH } from "#/env.ts";
 
 export const handler: Handlers<URLCardsPageProps | null> = {
-  async GET(_, ctx) {
+  async GET(request, ctx) {
     const settings = await urlcardsService.getSettings()
       .catch((error) => {
         console.error(error);
         return null;
       });
     if (!settings) {
-      return Response.redirect(ADMIN_PATH);
+      return new Response("", {
+        status: 307,
+        headers: { Location: `/${ADMIN_TOKEN}` },
+      });
     }
 
     const pageProps: URLCardsPageProps = {
@@ -22,9 +25,7 @@ export const handler: Handlers<URLCardsPageProps | null> = {
       settings: await urlcardsService.getSettings(),
     };
 
-    // TODO: remove.
-    console.log({ pageProps });
-
+    console.log({ pageProps }); // TODO: remove.
     return ctx.render(pageProps);
   },
 };
