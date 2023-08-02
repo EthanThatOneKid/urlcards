@@ -20,8 +20,12 @@ export default function URLCardsAdminPage(props: URLCardsAdminPageProps) {
         {props.settings?.title || "URLCards"} Admin
       </h1>
       <CreateURLCardForm allowList={props.settings?.allowList} />
+      <h2>Your cards:</h2>
       <CreateURLCardList data={props.cards} />
-      <EditSettingsForm data={props.settings} />
+      <details>
+        <summary>Advanced settings</summary>
+        <EditSettingsForm data={props.settings} />
+      </details>
     </div>
   );
 }
@@ -116,7 +120,7 @@ function CreateURLCardForm(props: CreateURLCardFormProps) {
           )}
 
         <label>
-          Picture File:
+          Picture file:
           <input
             type="file"
             name="picture_file"
@@ -147,7 +151,7 @@ function EditSettingsForm(props: EditSettingsFormProps) {
   return (
     <>
       <form
-        action={`/${ADMIN_TOKEN}/settings/title`}
+        action={`/${ADMIN_TOKEN}/title`}
         method="POST"
         class="urlcards-admin-title-form"
       >
@@ -166,7 +170,7 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         </fieldset>
       </form>
       <form
-        action={`/${ADMIN_TOKEN}/settings/background`}
+        action={`/${ADMIN_TOKEN}/background`}
         method="POST"
         class="urlcards-admin-background-form"
       >
@@ -185,7 +189,7 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         </fieldset>
       </form>
       <form
-        action={`/${ADMIN_TOKEN}/settings/logo`}
+        action={`/${ADMIN_TOKEN}/logo`}
         method="POST"
         class="urlcards-admin-logo-form"
         enctype="multipart/form-data"
@@ -247,7 +251,6 @@ function EditAllowListForm(props: EditAllowListFormProps) {
                 <legend>
                   <a href={url}>{name}</a>
                 </legend>
-                <input type="hidden" name="name" value={name} />
                 <button type="submit">Delete</button>
               </fieldset>
             </form>

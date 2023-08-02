@@ -128,11 +128,12 @@ export class DenoKvURLCardsService implements URLCardsService {
   ): Promise<URLCardsSettings> {
     const key = this.namespace.concat(URLCardsKvPrefix.SETTINGS);
     const settingsResult = await this.kv.get<URLCardsSettings>(key);
-    if (!settingsResult.value) {
-      throw new Error("settings not found");
-    }
-
-    const settings: URLCardsSettings = settingsResult.value;
+    const settings = settingsResult.value ?? {
+      title: "",
+      background: "",
+      logoSrc: "",
+      allowList: [],
+    } satisfies URLCardsSettings;
     if (r.title) {
       settings.title = r.title;
     }

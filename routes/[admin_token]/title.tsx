@@ -3,7 +3,7 @@ import { ADMIN_TOKEN } from "#/env.ts";
 import { urlcardsService } from "#/services/services.ts";
 
 export const handler: Handlers = {
-  async POST(_, ctx) {
+  async POST(request, ctx) {
     // Redirect to public page if admin token is not provided.
     if (ctx.params.admin_token !== ADMIN_TOKEN) {
       return new Response("", {
@@ -14,13 +14,14 @@ export const handler: Handlers = {
       });
     }
 
-    if (!ctx.params.card_id) {
-      throw new Error("card_id is not present");
+    const formData = await request.formData();
+    const title = formData.get("title");
+    if (typeof title !== "string") {
+      throw new Error("title is not present");
     }
+
     try {
-      await urlcardsService.deleteCard({
-        id: ctx.params.card_id,
-      });
+      await urlcardsService.updateSettings({ title });
     } catch (error) {
       console.error(error);
       throw error;
