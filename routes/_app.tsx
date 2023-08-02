@@ -5,9 +5,12 @@ export default function App({ Component }: AppProps) {
   return (
     <>
       <Head>
-        <link rel="stylesheet" href="/styles.css" />
+        <link rel="stylesheet" href="/global.css" />
+        <link rel="stylesheet" href="/theme.css" />
       </Head>
-      <Component />
+      <main>
+        <Component />
+      </main>
     </>
   );
 }
