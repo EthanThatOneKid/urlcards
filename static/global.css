@@ -1,3 +1,6 @@
+/* Import https://picocss.com/ */
+@import "https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css";
+
 /* CSS reset */
 *,
 *::before,
@@ -16,11 +19,25 @@ html {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+main {
+  width: 100%;
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    padding: 10px;
+  }
+}
+
 button {
   color: inherit;
 }
 
-button, [role="button"] {
+button,
+[role="button"] {
   cursor: pointer;
 }
 

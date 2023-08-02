@@ -7,7 +7,7 @@ import URLCardsPage, {
 } from "#/components/urlcards_page.tsx";
 
 export const handler: Handlers<URLCardsPageProps | null> = {
-  async GET(request, ctx) {
+  async GET(_, ctx) {
     const settings = await urlcardsService.getSettings()
       .catch((error) => {
         console.error(error);

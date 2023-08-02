@@ -20,8 +20,10 @@ export default function URLCardsAdminPage(props: URLCardsAdminPageProps) {
         {props.settings?.title || "URLCards"} Admin
       </h1>
       <CreateURLCardForm allowList={props.settings?.allowList} />
-      <h2>Your cards:</h2>
+
+      <h2>Your cards</h2>
       <CreateURLCardList data={props.cards} />
+
       <details>
         <summary>Advanced settings</summary>
         <EditSettingsForm data={props.settings} />
@@ -43,25 +45,29 @@ interface CreateURLCardListProps {
  */
 function CreateURLCardList(props: CreateURLCardListProps) {
   return (
-    <ul class="urlcards-admin-list">
-      {props.data.map((card) => (
-        <li class="urlcards-admin-list-item">
-          <form
-            action={`/${ADMIN_TOKEN}/cards/${card.id}/delete`}
-            method="POST"
-            class="urlcards-admin-delete-form"
-          >
-            <fieldset>
-              <legend>
-                <a href={card.url}>{card.title}</a>
-              </legend>
-              <img src={card.pictureSrc} alt={card.title} />
-              <button type="submit">Delete</button>
-            </fieldset>
-          </form>
-        </li>
-      ))}
-    </ul>
+    props.data.length > 0
+      ? (
+        <ul class="urlcards-admin-list">
+          {props.data.map((card) => (
+            <li class="urlcards-admin-list-item">
+              <form
+                action={`/${ADMIN_TOKEN}/cards/${card.id}/delete`}
+                method="POST"
+                class="urlcards-admin-delete-form"
+              >
+                <fieldset>
+                  <legend>
+                    <a href={card.url}>{card.title}</a>
+                  </legend>
+                  <img src={card.pictureSrc} alt={card.title} />
+                  <button type="submit">Delete</button>
+                </fieldset>
+              </form>
+            </li>
+          ))}
+        </ul>
+      )
+      : <p>There are no cards.</p>
   );
 }
 
@@ -79,13 +85,14 @@ function CreateURLCardForm(props: CreateURLCardFormProps) {
   return (
     <form
       method="POST"
-      enctype="multipart/form-data"
+      encType="multipart/form-data"
       class="urlcards-admin-create-form"
       action={`/${ADMIN_TOKEN}/cards`}
     >
       <fieldset>
-        <legend>Create URLCard</legend>
-
+        <h2>
+          Create a new card
+        </h2>
         <label>
           Title:
           <input
@@ -156,7 +163,6 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         class="urlcards-admin-title-form"
       >
         <fieldset>
-          <legend>Edit title</legend>
           <label>
             Title:
             <input
@@ -175,7 +181,6 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         class="urlcards-admin-background-form"
       >
         <fieldset>
-          <legend>Edit background</legend>
           <label>
             Background:
             <input
@@ -192,10 +197,9 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         action={`/${ADMIN_TOKEN}/logo`}
         method="POST"
         class="urlcards-admin-logo-form"
-        enctype="multipart/form-data"
+        encType="multipart/form-data"
       >
         <fieldset>
-          <legend>Edit logo</legend>
           <img src={props.data?.logoSrc} alt="Logo" />
           <label>
             Logo File:
@@ -228,7 +232,9 @@ function EditAllowListForm(props: EditAllowListFormProps) {
         class="urlcards-admin-allow-form"
       >
         <fieldset>
-          <legend>Add allowed URL</legend>
+          <h2>
+            Edit allow list
+          </h2>
           <label>
             Name:
             <input type="text" name="name" placeholder="Name" />
@@ -241,22 +247,24 @@ function EditAllowListForm(props: EditAllowListFormProps) {
         </fieldset>
       </form>
       <ul class="urlcards-admin-allow-list">
-        {props.data?.map(({ name, url }) => (
-          <li class="urlcards-admin-allow-list-item">
-            <form
-              action={`/${ADMIN_TOKEN}/allow_list/${name}/delete`}
-              method="POST"
-              class="urlcards-admin-allow-delete-form"
-            >
-              <fieldset>
-                <legend>
-                  <a href={url}>{name}</a>
-                </legend>
-                <button type="submit">Delete</button>
-              </fieldset>
-            </form>
-          </li>
-        ))}
+        {(props.data?.length ?? 0) > 0
+          ? (props.data?.map(({ name, url }) => (
+            <li class="urlcards-admin-allow-list-item">
+              <form
+                action={`/${ADMIN_TOKEN}/allow_list/${name}/delete`}
+                method="POST"
+                class="urlcards-admin-allow-delete-form"
+              >
+                <fieldset>
+                  <legend>
+                    <a href={url}>{name}</a>
+                  </legend>
+                  <button type="submit">Delete</button>
+                </fieldset>
+              </form>
+            </li>
+          )))
+          : <>The allow list is empty.</>}
       </ul>
     </>
   );

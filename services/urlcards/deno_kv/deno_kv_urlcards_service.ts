@@ -131,7 +131,8 @@ export class DenoKvURLCardsService implements URLCardsService {
     const settingsResult = await this.kv.get<URLCardsSettings>(key);
     const settings = settingsResult.value ?? {
       title: "",
-      background: "",
+      color: "#000",
+      background: "#fff",
       logoSrc: "",
       allowList: [],
     } satisfies URLCardsSettings;

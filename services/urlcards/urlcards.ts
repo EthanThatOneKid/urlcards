@@ -113,6 +113,11 @@ export interface URLCardsSettings {
   title: string;
 
   /**
+   * color is the font color of the index page.
+   */
+  color: string;
+
+  /**
    * background is the value of the index page's body's background CSS property.
    */
   background: string;
