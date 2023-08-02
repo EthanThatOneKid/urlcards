@@ -12,7 +12,7 @@ export const urlcardsService = await makeURLCardsService();
  * makeURLCardsService creates the URLCardsService for the application.
  */
 export async function makeURLCardsService(): Promise<URLCardsService> {
-  const kv = await Deno.openKv("./dev.db");
+  const kv = await Deno.openKv();
   return new DenoKvURLCardsService(
     kv,
     [],

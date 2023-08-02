@@ -176,6 +176,24 @@ function EditSettingsForm(props: EditSettingsFormProps) {
         </fieldset>
       </form>
       <form
+        action={`/${ADMIN_TOKEN}/color`}
+        method="POST"
+        class="urlcards-admin-color-form"
+      >
+        <fieldset>
+          <label>
+            Color:
+            <input
+              type="text"
+              name="color"
+              placeholder="Color"
+              value={props.data?.color}
+            />
+          </label>
+          <button type="submit">Edit</button>
+        </fieldset>
+      </form>
+      <form
         action={`/${ADMIN_TOKEN}/background`}
         method="POST"
         class="urlcards-admin-background-form"

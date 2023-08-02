@@ -26,21 +26,28 @@ export const handler: Handlers = {
 function renderThemeCSS(settings: URLCardsSettings): string {
   const coloredSelectors = [
     "label",
-    "fieldset",
     "p",
-    "summary",
     "h1",
     "h2",
     "h3",
     "h4",
     "h5",
     "h6",
+    "summary",
   ];
-  return `html {
-  background: ${settings.background};
-}
 
-${coloredSelectors.join(",")} {
+  const css = [];
+  if (settings.background) {
+    css.push(`html {
+  background: ${settings.background};
+}`);
+  }
+
+  if (settings.color) {
+    css.push(`${coloredSelectors.join(",")} {
     color: ${settings.color};
-}`;
+}`);
+  }
+
+  return css.join("\n");
 }
