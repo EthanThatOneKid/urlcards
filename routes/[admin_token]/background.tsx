@@ -21,7 +21,7 @@ export const handler: Handlers = {
     }
 
     try {
-      await urlcardsService.updateSettings({ background });
+      await urlcardsService.updateSettings(() => ({ background }));
     } catch (error) {
       console.error(error);
       throw error;

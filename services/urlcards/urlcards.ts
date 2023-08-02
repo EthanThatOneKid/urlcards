@@ -30,7 +30,9 @@ export interface URLCardsService {
   /**
    * updateSettings updates the settings for the URLCardsService.
    */
-  updateSettings(r: UpdateURLCardsSettingsRequest): Promise<URLCardsSettings>;
+  updateSettings(
+    fn: (s: URLCardsSettings) => UpdateURLCardsSettingsRequest,
+  ): Promise<URLCardsSettings>;
 }
 
 /**
@@ -96,9 +98,9 @@ export interface URLCard extends Omit<CreateURLCardRequest, "pictureFile"> {
 export interface UpdateURLCardsSettingsRequest
   extends Partial<URLCardsSettings> {
   /**
-   * logo is the logo shown on the index page.
+   * logoFile is the logo uploaded and shown on the index page.
    */
-  logo?: File;
+  logoFile?: File;
 }
 
 /**

@@ -15,13 +15,27 @@ export const handler: Handlers = {
     }
 
     const formData = await request.formData();
-    const title = formData.get("title");
-    if (typeof title !== "string") {
-      throw new Error("title is not present");
+    const name = formData.get("name");
+    if (typeof name !== "string") {
+      throw new Error("name is not present");
     }
 
+    const url = formData.get("url");
+    if (typeof url !== "string") {
+      throw new Error("url is not present");
+    }
+
+    // Add allowed URL to the Allow List
     try {
-      await urlcardsService.updateSettings(() => ({ title }));
+      await urlcardsService.updateSettings(({ allowList }) => {
+        const foundIndex = allowList.findIndex((item) => item.name === name);
+        if (foundIndex !== -1) {
+          allowList[foundIndex] = { name, url };
+        } else {
+          allowList.push({ name, url });
+        }
+        return { allowList };
+      });
     } catch (error) {
       console.error(error);
       throw error;

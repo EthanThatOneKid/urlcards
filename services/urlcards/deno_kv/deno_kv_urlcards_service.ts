@@ -124,8 +124,9 @@ export class DenoKvURLCardsService implements URLCardsService {
   }
 
   public async updateSettings(
-    r: UpdateURLCardsSettingsRequest,
+    fn: (s: URLCardsSettings) => UpdateURLCardsSettingsRequest,
   ): Promise<URLCardsSettings> {
+    // Get the settings.
     const key = this.namespace.concat(URLCardsKvPrefix.SETTINGS);
     const settingsResult = await this.kv.get<URLCardsSettings>(key);
     const settings = settingsResult.value ?? {
@@ -134,6 +135,9 @@ export class DenoKvURLCardsService implements URLCardsService {
       logoSrc: "",
       allowList: [],
     } satisfies URLCardsSettings;
+
+    // Update the settings given the existing settings.
+    const r = fn(settings);
     if (r.title) {
       settings.title = r.title;
     }
@@ -146,13 +150,12 @@ export class DenoKvURLCardsService implements URLCardsService {
       settings.allowList = r.allowList;
     }
 
-    if (r.logo) {
-      const { url } = await this.uploads.createUpload({
-        file: r.logo,
-      });
+    if (r.logoFile) {
+      const { url } = await this.uploads.createUpload({ file: r.logoFile });
       settings.logoSrc = url;
     }
 
+    // Apply the settings changes.
     const result = await this.kv.atomic()
       .check(settingsResult)
       .set(key, settings)

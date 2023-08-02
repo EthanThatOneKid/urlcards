@@ -196,6 +196,7 @@ function EditSettingsForm(props: EditSettingsFormProps) {
       >
         <fieldset>
           <legend>Edit logo</legend>
+          <img src={props.data?.logoSrc} alt="Logo" />
           <label>
             Logo File:
             <input type="file" name="logo_file" placeholder="Logo file" />

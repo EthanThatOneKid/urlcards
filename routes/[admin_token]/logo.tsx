@@ -15,13 +15,13 @@ export const handler: Handlers = {
     }
 
     const formData = await request.formData();
-    const title = formData.get("title");
-    if (typeof title !== "string") {
-      throw new Error("title is not present");
+    const logoFile = formData.get("logo_file");
+    if (!(logoFile instanceof File)) {
+      throw new Error("logo_file is not a File");
     }
 
     try {
-      await urlcardsService.updateSettings(() => ({ title }));
+      await urlcardsService.updateSettings(() => ({ logoFile }));
     } catch (error) {
       console.error(error);
       throw error;

@@ -14,14 +14,19 @@ export const handler: Handlers = {
       });
     }
 
-    const formData = await request.formData();
-    const title = formData.get("title");
-    if (typeof title !== "string") {
-      throw new Error("title is not present");
+    // Throw an error if the name is not present.
+    if (!ctx.params.name) {
+      throw new Error("name is not present");
     }
 
+    // Remove the item from the allow list.
     try {
-      await urlcardsService.updateSettings(() => ({ title }));
+      await urlcardsService.updateSettings(({ allowList }) => {
+        const newAllowList = allowList.filter((item) =>
+          item.name !== ctx.params.name
+        );
+        return { allowList: newAllowList };
+      });
     } catch (error) {
       console.error(error);
       throw error;
