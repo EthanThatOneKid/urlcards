@@ -17,10 +17,14 @@ export default function URLCardsPage(props: URLCardsPageProps) {
     <div class="urlcards-page">
       <img src={props.settings.logoSrc} alt="logo" class="urlcards-logo" />
       <h1 class="urlcards-title">{props.settings.title}</h1>
-      <div class="urlcards-list">
+      <ul class="urlcards-list">
         {props.cards
-          .map((card) => <URLCardComponent key={card.id} data={card} />)}
-      </div>
+          .map((card) => (
+            <li>
+              <URLCardComponent key={card.id} data={card} />
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }

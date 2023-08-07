@@ -8,9 +8,7 @@ export default function App({ Component }: AppProps) {
         <link rel="stylesheet" href="/global.css" />
         <link rel="stylesheet" href="/theme.css" />
       </Head>
-      <main>
-        <Component />
-      </main>
+      <Component />
     </>
   );
 }

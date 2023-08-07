@@ -48,16 +48,36 @@ code {
 }
 
 img,
-svg {
-  display: block;
-}
-
-img,
 video {
   max-width: 100%;
   height: auto;
 }
 
+.urlcards-page {
+  text-align: center;
+  margin: 0 5ch;
+}
+
+@media screen and (max-width: 768px) {
+  .urlcards-page {
+    margin: 0;
+  }
+}
+
+.urlcards-list {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.urlcards-list li {
+  display: inline-flex;
+  list-style: none;
+}
+
 .urlcard {
   width: 60ch;
+}
+
+.urlcard img {
+  max-height: 500px;
 }
