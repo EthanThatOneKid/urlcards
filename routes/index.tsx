@@ -25,7 +25,6 @@ export const handler: Handlers<URLCardsPageProps | null> = {
       settings: await urlcardsService.getSettings(),
     };
 
-    console.log({ pageProps }); // TODO: remove.
     return ctx.render(pageProps);
   },
 };

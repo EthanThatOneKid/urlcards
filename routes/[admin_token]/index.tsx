@@ -26,7 +26,6 @@ export const handler: Handlers<URLCardsAdminPageProps | null> = {
         }),
     };
 
-    console.log({ pageProps }); // TODO: remove.
     return ctx.render(pageProps);
   },
 };
